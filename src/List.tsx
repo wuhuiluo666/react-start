@@ -22,12 +22,19 @@ const List: React.FC = () => {
             isPublished: false
         }])
     }
+    const editQuestion = (id: string) => {
+        setQuestionList(questionList.map(q => q.id === id ? {
+            ...q,
+            isPublished: !q.isPublished
+        } : q))
+    }
+
     const deleteQuestion = (id: string) => setQuestionList(questionList.filter(question => question.id != id))
     return <div>
         {
             questionList.map(question => {
                 const { id, title, isPublished } = question
-                return <QuestionCard key={id} id={id} title={title} isPublish={isPublished} deleteQuestion={deleteQuestion} />
+                return <QuestionCard editQuestion={editQuestion} key={id} id={id} title={title} isPublish={isPublished} deleteQuestion={deleteQuestion} />
             })
         }
         <button onClick={addQuestion}>新增问卷</button>
